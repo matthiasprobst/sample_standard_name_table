@@ -2,9 +2,9 @@ name: sample_standard_name_table
 version_number: 1
 institution: Karlsruhe Institute of Technology
 contact: matthias.probst@kit.edu
-valid_characters: ''
-pattern: ''
-last_modified: 2023-04-10_11:56:46
+valid_characters: '[^a-zA-Z0-9_]'
+pattern: ^[0-9 ].*
+last_modified: 2023-04-10_15:50:23
 ---
 table:
   absolute_air_pressure:

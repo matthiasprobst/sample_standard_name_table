@@ -21,9 +21,14 @@ def check(filename):
         filename
     )
     assert snt.versionname == 'sample_standard_name_table-v1'
-
+    check_result = True
+    for k, v in snt.table.items():
+        if not snt.check_name(k, strict=True):
+            check_result = False
+        if not snt.check_units(k, v['canonical_units']):
+            check_result = False
     snt.sdump()
-    return snt
+    return snt, check_result
 
 
 def sort(filename):
@@ -34,15 +39,22 @@ def sort(filename):
     snt_local.to_yaml(filename)  # automatically sorts
 
 
-_READNME_TXT = r"""Sample Standard Name Table
+def generate_readme(check: bool):
+    """Generates the README.md file"""
+    if check:
+        check_badge = 'https://img.shields.io/badge/check-passed-green.svg'
+    else:
+        check_badge = 'https://img.shields.io/badge/check-failed-red.svg'
+    _READNME_TXT = rf"""Sample Standard Name Table
 ==========================
 
 
 |version v1| |project h5rdmtoolbox| |example|
 
-.. |version v1| image:: https://img.shields.io/badge/Version-v1-green.svg
-.. |project h5rdmtoolbox| image:: https://img.shields.io/badge/Project-h5RDMtoolbox-orange.svg
+.. |version v1| image:: https://img.shields.io/badge/version-v1-green.svg
+.. |project h5rdmtoolbox| image:: https://img.shields.io/badge/project-h5RDMtoolbox-orange.svg
 .. |example| image:: https://img.shields.io/badge/status-example-yellow.svg
+.. |example| image:: {check_badge}
 
 A sample standard name table as used in the h5RDMtoolbox. This is an **example** standard
 name table and used for testing and demonstration purposes in the `h5RDMtoolbox` package.
@@ -55,13 +67,14 @@ shows the table. The table is also produced in the python file:
 Table
 -----
 """
+    return _READNME_TXT
 
 
 def update_readme(snt_filename, target_filename='README.rst'):
     """Adds the table to the readme file"""
-    snt = check(snt_filename)
+    snt, check_result = check(snt_filename)
     with open(target_filename, 'w') as f:
-        f.writelines(_READNME_TXT)
+        f.writelines(generate_readme(check_result))
         f.write('.. list-table:: Table of standard names')
         f.write('\n\t:widths: 10, 10, 10')
         f.write('\n\t:header-rows: 1\n')

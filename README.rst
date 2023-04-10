@@ -4,9 +4,10 @@ Sample Standard Name Table
 
 |version v1| |project h5rdmtoolbox| |example|
 
-.. |version v1| image:: https://img.shields.io/badge/Version-v1-green.svg
-.. |project h5rdmtoolbox| image:: https://img.shields.io/badge/Project-h5RDMtoolbox-orange.svg
+.. |version v1| image:: https://img.shields.io/badge/version-v1-green.svg
+.. |project h5rdmtoolbox| image:: https://img.shields.io/badge/project-h5RDMtoolbox-orange.svg
 .. |example| image:: https://img.shields.io/badge/status-example-yellow.svg
+.. |example| image:: https://img.shields.io/badge/check-passed-green.svg
 
 A sample standard name table as used in the h5RDMtoolbox. This is an **example** standard
 name table and used for testing and demonstration purposes in the `h5RDMtoolbox` package.
